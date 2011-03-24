@@ -1,0 +1,8 @@
+---
+layout: default
+title: David Rocamora - Digital Survivalist
+---
+
+My name is dave. I am trying to make a good website.
+
+Let's see how it goes.
