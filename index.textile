@@ -3,6 +3,18 @@ layout: default
 title: David Rocamora - Digital Survivalist
 ---
 
-My name is dave. I am trying to make a good website.
+It's more like "Digital Minimalist" for now
 
-Let's see how it goes.
+I'm a technologist in NYC. 
+
+h2. My "Blog"
+{% for post in site.posts %}
+* "{{ post.title }}":{{ post.url }} on {{ post.date | date_to_string}}
+{% endfor %} 
+
+h2. Where to find me on the Internet
+
+* "Github":https://github.com/drocamor
+* "Flickr":http://www.flickr.com/photos/drocko
+* "Twitter":http://twitter.com/#!/drocko
+* "LinkedIn":http://www.linkedin.com/in/rocamora

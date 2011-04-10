@@ -1,1 +1,65 @@
-asdfasd
+@font-face {
+    font-family: 'LeagueGothicRegular';
+    src: url('/fonts/League_Gothic-webfont.eot?') format('eot'),
+    url('/fonts/League_Gothic-webfont.woff') format('woff'),
+    url('/fonts/League_Gothic-webfont.ttf') format('truetype'),
+    url('/fonts/League_Gothic-webfont.svg#webfont1Lb5Pdit') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+    font-family: 'Lucida Grande', 'Segoe UI', 'Droid Sans', sans-serif;
+    font-weight:normal;
+    color: #262626;
+    background: #EEEEEC;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    font-weight:bold;
+    text-transform:uppercase;
+    font-family:League Gothic, LeagueGothicRegular;
+    sans-serif;
+    font-weight:normal;
+    overflow-x:visible
+}
+
+h1 {font-size:4em;}
+h2 {font-size:2em;}
+h3 {font-size:1.2em;}
+h4 {font-size:1em;}
+h5 {font-size:0.75em;}
+h6 {font-size:0.5em;}
+
+a {
+    text-decoration:none;
+    color:#003AEF;
+    border-bottom:2px #EEEEEC dotted;
+    -moz-transition:border-bottom 0.3s ease-in;
+    -webkit-transition:border-bottom 0.3s ease-in;
+}
+
+a:hover {
+    border-bottom:2px #003AEF dotted;
+}
+
+p.footer {
+    font-size:0.5em;
+}
+
+a.header:hover { 
+    border-bottom:none;
+}
+    
+#content {
+    max-width:35em;
+    margin-left:6em;
+}
+

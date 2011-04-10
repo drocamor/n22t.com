@@ -1,0 +1,43 @@
+---
+layout: default
+title: Using the OpenPGP Card for SSH Authentication
+---
+
+A week or two ago I decided that I would like to increase the security around my computer (and keep up my nerd cred) so I ordered an "OpenPGP card":http://shop.kernelconcepts.de/product_info.php?products_id=42 from Kernel Concepts. It was delivered on Saturday, and I spent the weekend configuring it.
+
+h2. The Card
+
+﻿﻿<a href="http://www.flickr.com/photos/drocko/5544411374/" title="The OpenPGP card by drocko, on Flickr"><img src="http://farm6.static.flickr.com/5011/5544411374_78625920fe.jpg" width="500" height="375" alt="The OpenPGP card" /></a>
+
+The OpenPGP card is a smartcard that can store cryptographic information. There's probably a lot you could learn about it, but basically it stores your private keys in a safe way. If someone took the card and tried to tamper with it they would lock themselves out (enter the PIN wrong 3 times and it locks) or the card would destroy itself (I have not tried this, but if you enter the admin PIN wrong 3 times it destroys itself. One can only hope that the card announces it's impending destruction and begins to smoke).
+
+One bummer about the OpenPGP card is that as of version 2, it only supports three 2048bit keys. The docs do say that it can store up to a 3072 bit key, but people have varying results. I read one piece of documentation that indicated that it can store up to 2048 bits of key and then the rest of that space is for key signatures. I don't really know. It seems that there is a lot of misinformation about these cards.
+
+I will try to describe how I set up my card for authentication.  I ordered the SIM card cutout version of the card. I put the SIM in a<a title="Gemalto USB shell" href="http://shop.kernelconcepts.de/product_info.php?products_id=119"> Gemalto USB smartcard shell</a>. This is a smartcard reader that stores the SIM in it. To most people it looks like a USB memory stick. I wanted the smartcard to hold my PGP authentication subkey so I could use it for SSH. Eventually, I plan to do more things with it.
+
+h2. Configuration
+
+First, you must install the correct software. For me this meant installing the Debian packages for ﻿﻿gnupg-agent, gnupg2, gpgsm, and pcscd. pcscd wasn't always clearly listed in the other instructions I found, but I realized that my computer wasn't seeing the Gemalto device as a card reader without it.
+
+I initialized the card using gpg2 --edit-card and changed the PINs using gpg2 --change-pin (one thing to note about the PINs, the regular PIN must be at least 6 digits while the admin PIN must be at least 8. I was given no warning that it didn't change the admin PIN when I entered a shorter PIN).
+
+Next, I transferred my authentication subkey to the card. There is some great (although very verbose) information about this <a title="setting up a PGP smartcard" href="http://ncommander.blogspot.com/2009/08/so-after-having-my-trusty-sony-vaio-do.html">here</a>. Here were the basic 
+
+# Back up your key and your ~/.gnupg folder
+# Edit your key and toggle to select the secret keys
+# Select your authentication subkey
+# Use the keytocard command to transfer it to the card
+
+Most of the information from this point on comes from <a title="how to use gpg with ssh" href="http://www.programmierecke.net/howto/gpg-ssh.html">this page</a>. After the authentication key was on the card, I needed to make sure I could get the public key in an SSH format so that I could put it in my ~/.ssh/authorized_keys files on the servers I deal with. This is really easy:
+
+<script src="https://gist.github.com/878731.js?file=Using%20gpgkey2ssh.sh"></script>
+
+To get SSH authentication working reliably, you must replace ssh-agent with gnupg-agent as your authentication manager for your login session. gnupg-agent can become a drop in replacement for ssh-agent and can even handle your existing SSH keys. Switch to it and you probably won't notice a difference. Heres how to switch:
+
+<script src="https://gist.github.com/878731.js?file=Enabling%20gnupg-agent%20for%20SSH%20authentication.sh"></script>
+
+h2. Next Steps
+
+There's other stuff you can do with the card, which I'll cover in a future blog post. There is a ton of information out there about this, but some of it is unclear or out of date. I hope this can sort out some confusion if you're having issues implementing this. Leave a comment or send me an email if you need any clarification.
+
+You will have to do some logging out and logging back in again, but if all goes well you should be seeing ssh-add -l list your authentication subkey.
