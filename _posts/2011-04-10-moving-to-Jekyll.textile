@@ -1,0 +1,9 @@
+---
+layout: default
+title: Moving to Jekyll
+---
+
+If you're a frequent visitor, you will notice that I've redesigned my website. I've also made an effort to combine the blog and my website into one place. On top of this, I decided to move from static HTML that I maintain by hand and an install of Wordpress to a very simple collection of HTML files generated from textile using "Jekyll":https://github.com/mojombo/jekyll.
+
+Jekyll makes this pretty darn easy and opens the doors to hosting this someplace more interesting, like "S3":http://aws.amazon.com/s3 or "CloudFront":http://aws.amazon.com/cloudfront.
+
