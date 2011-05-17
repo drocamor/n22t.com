@@ -1,0 +1,22 @@
+---
+layout: default
+title: Using EC2 to make fractals
+---
+
+This may come as a surprise, but my computer is not very fast. 
+
+I use a Thinkpad x100e and it is not the most powerful machine. It has a dual core processor that hovers between 800MHz and 1.6 GHz. Most of my nerd friends are probably laughing at how pitiful my machine is, but that's OK. I like how it is small, light, and has decent battery power.
+
+Today I did run up against a bit of a problem. My friends had sent me a link to an "application that could generate 3D factals":http://sites.google.com/site/mandelbulber and I just had to check it out. I installed it and while it did work, rendering a simple frame was going to take hours. Not only that, the maxed out CPUs were generating so much heat that the laptop's fans had to scream at full blast to keep up. This wasn't going to work for me.
+
+<a href="http://www.flickr.com/photos/drocko/5727207213/" title="3D Fractals via EC2 by drocko, on Flickr"><img src="http://farm4.static.flickr.com/3318/5727207213_5a6203cde6.jpg" width="500" height="312" alt="3D Fractals via EC2"></a>
+
+Fortunately the year is 2011 and we can run a few commands to start up cloud computers to serve websites, develop new drugs, or just make fractals. I've written about how we've done a lot of work to "make it easy to launch an EC2 instance":http://blog.controlgroup.com/2011/04/25/configuring-machines-in-the-cloud-our-approach at my company's blog and this was a pretty good use of it. Within about 10 minutes I had a "c1.xlarge High-CPU Extra Large Instance":http://aws.amazon.com/ec2/instance-types up and running with Mandelbulber. I was able to tunnel the X11 display using SSH from the instance to my laptop which stayed as cool as a cucumber during an hour of playing with the program. 
+
+I found that this worked great because Mandelbulber is a CPU intensive program and doesn't make use of a GPU (I suppose if it used a GPU I would need to try a cg1.4xlarge instance type). The only real challenge was the network latency for the X11 display. I find that I could make things workable if I used compression on the SSH tunnel. If I do this more often I will work on getting something like neatx to run on Debian.
+
+<a href="http://www.flickr.com/photos/drocko/5727764264/" title="3D Fractals via EC2 by drocko, on Flickr"><img src="http://farm4.static.flickr.com/3401/5727764264_59bcd4b965.jpg" width="500" height="312" alt="3D Fractals via EC2"></a>
+
+The best part about it all was that when I was done I just terminated the instance. Total cost of my fractal fun: $0.68. Not bad.
+
+Check out the "flickr set":http://www.flickr.com/photos/drocko/sets/72157626736416512 to see what I made. 
