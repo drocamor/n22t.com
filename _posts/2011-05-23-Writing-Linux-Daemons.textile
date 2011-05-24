@@ -1,0 +1,20 @@
+---
+layout: default
+title: Writing Linux Daemons
+---
+
+I've been working on some software to help create flexible cloud-based infrastructure. The most recent component that I've been working on required the creation of a "daemon":http://en.wikipedia.org/wiki/Daemon_(computer_software) that could pick up some messages and whisk them off to a queue for later processing. Writing a successful daemon is not that hard, but the details around how to do it seemed a bit vague to me so I thought I would document what I did to help other people in the future. 
+
+Any program could be a daemon. All it has to do is follow a few rules:
+
+# Fork twice (this allows it to really go to the background and become the session leader)
+# Change it's working directory to /
+# Set the umask to 0
+# Redirect stdin, stdout and stderr to a logfile or /dev/null
+# Write it's PID to a pidfile that it's init script references (This is probably not a requirement of all daemons, but if you're working with Debian GNU/Linux and want to use the skeleton init scripts without much work you should do this)
+
+After I figured all of that out it was pretty easy. I ended up implementing my program in Python and used "this page":http://www.enterpriseitplanet.com/networking/features/article.php/3786386 as a reference. 
+
+The only other trick that I discovered was that the init script needs to know the exact name of the executable as if it were seeing it in ps. In Debian, init scripts are basically a front end for killall and without the actual process name they can't stop the process. 
+
+So all in all, not too bad. It's great to be able to write software that fits with the rest of the system. A consistent computer makes it easy when multiple people are involved with administering it.
