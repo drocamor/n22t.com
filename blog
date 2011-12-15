@@ -10,9 +10,9 @@ publish()
 {
     echo Publishing site...
     echo '----'
-    (cd $jekyll_root && rsync -vz _site/ $remote_site_root)
+    (cd $jekyll_root && rsync -avz _site/ $remote_site_root)
     if [ $? == 0 ]; then
-	echo '----'a
+	echo '----'
 	echo Successful!
     else
 	echo '----'
@@ -101,10 +101,10 @@ case "$1" in
 	clean_site
 	gen_site
 	;;
-    gen)
-	gen_site
-	;;
     server)
 	server
+	;;
+    *)
+	echo "Usage: blog {clean|new|publish|regen|server}"
 	;;
 esac
