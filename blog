@@ -1,0 +1,110 @@
+#! /bin/bash
+
+# Customize these
+
+jekyll_root=~/Documents/Personal/n22t
+remote_site_root="drocamor@n22t.com:sites/n22t.com"
+
+
+publish()
+{
+    echo Publishing site...
+    echo '----'
+    (cd $jekyll_root && rsync -vz _site/ $remote_site_root)
+    if [ $? == 0 ]; then
+	echo '----'a
+	echo Successful!
+    else
+	echo '----'
+	echo Failed!
+	exit 1
+    fi
+}
+
+new_post()
+{
+    echo -n 'Post title: '
+    read title
+
+    #
+    # Some people, when confronted with a problem, think 
+    # “I know, I'll use regular expressions.”   Now they have two problems.
+    #
+
+    # Remove funky characters from the title, replace spaces with dashes, and downcase it
+    post_file_name=`date +%Y-%m-%d`-`echo $title | sed 's/[^[:alnum:]^[:space:]]//g;s/[[:space:]]/-/g;' | tr '[A-Z]' '[a-z]'`.md
+    # Create a new text file for the post
+    echo -n Creating post...
+    cat > $jekyll_root/_posts/$post_file_name <<EOF
+---
+layout: default
+title: $title
+---
+
+
+EOF
+    echo Done.
+    echo Opening emacs...
+    emacsclient $jekyll_root/_posts/$post_file_name
+}
+
+gen_site()
+{
+    echo Generating site...
+    echo '----'
+    (cd $jekyll_root && jekyll)
+    if [ $? == 0 ]; then
+	echo '----'
+	echo Successful!
+    else
+	echo '----'
+	echo Failed!
+	exit 1
+    fi
+}
+
+clean_site()
+{
+    echo -n Cleaning _site...
+    rm -rf $jekyll_root/_site/*
+    if [ $? == 0 ]; then
+	echo Successful!
+    else
+	echo Failed!
+	exit 1
+    fi
+}
+
+server()
+{
+    echo Launching Jekyll Server...
+    echo '----'
+    google-chrome http://localhost:4000
+    (cd $jekyll_root && jekyll --server --auto)
+    echo '----'
+
+}
+
+case "$1" in
+    publish)
+	clean_site
+	gen_site
+	publish
+	;;
+    new)
+	new_post
+	;;
+    clean)
+	clean_site
+	;;
+    regen)
+	clean_site
+	gen_site
+	;;
+    gen)
+	gen_site
+	;;
+    server)
+	server
+	;;
+esac
