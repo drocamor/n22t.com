@@ -1,8 +1,8 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 # Customize these
 
-jekyll_root=~/Documents/Personal/n22t
+jekyll_root=~/Documents/n22t.com
 remote_site_root="drocamor@n22t.com:sites/n22t.com"
 
 
