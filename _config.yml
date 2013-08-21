@@ -1,3 +1,5 @@
 pygments: true
-exclude: README blog
+exclude:
+- README
+- blog
 
