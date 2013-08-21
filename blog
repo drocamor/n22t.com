@@ -2,7 +2,7 @@
 
 # Customize these
 
-jekyll_root=~/Documents/n22t.com
+jekyll_root=/Users/drocamor/projects/personal/n22t.com
 remote_site_root="drocamor@n22t.com:sites/n22t.com"
 
 
@@ -44,15 +44,15 @@ title: $title
 
 EOF
     echo Done.
-    echo Opening emacs...
-    emacsclient $jekyll_root/_posts/$post_file_name
+    echo $jekyll_root/_posts/$post_file_name:5.
+
 }
 
 gen_site()
 {
     echo Generating site...
     echo '----'
-    (cd $jekyll_root && jekyll)
+    (cd $jekyll_root && bundle exec jekyll build)
     if [ $? == 0 ]; then
 	echo '----'
 	echo Successful!
