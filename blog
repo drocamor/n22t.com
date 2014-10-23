@@ -44,8 +44,8 @@ title: $title
 
 EOF
     echo Done.
-    echo $jekyll_root/_posts/$post_file_name:5.
-
+    echo Opening EDITOR...
+    mg -n $jekyll_root/_posts/$post_file_name
 }
 
 gen_site()
